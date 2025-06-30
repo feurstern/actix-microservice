@@ -1,8 +1,16 @@
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
+use actix_web::{get, post, App, HttpResponse, HttpServer, Responder};
+
+mod config;
+mod db;
 
 #[get("/")]
 async fn greeting_message() -> impl Responder {
     HttpResponse::Ok().body("Welcome to the Rust for backend engineering")
+}
+
+#[get("/test")]
+async fn testing_message() -> impl Responder {
+    HttpResponse::Ok().body("Welcome to nazi")
 }
 
 #[post("/message")]
@@ -17,8 +25,12 @@ async fn get_user() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(greeting_message))
-        .bind("localhost:2121")?
-        .run()
-        .await
+    HttpServer::new(|| {
+        App::new()
+            .service(greeting_message)
+            .service(testing_message)
+    })
+    .bind("localhost:2121")?
+    .run()
+    .await
 }

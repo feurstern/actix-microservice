@@ -23,6 +23,7 @@ async fn get_user() -> impl Responder {
     HttpResponse::Ok().body("testr")
 }
 
+
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| {

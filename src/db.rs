@@ -1,9 +1,11 @@
-// use crate::config::get_database_url;
-// use sqlx::PgPool;
+use diesel::r2d2::{ConnectionManager, Pool};
+use diesel::PgConnection;
 
-// pub async fn init_pg_pool() -> PgPool {
-//     let db_url = get_database_url();
-//     PgPool::connect(&db_url)
-//         .await
-//         .expect("Failed to connect DB")
-// }
+pub type DbPool = Pool<ConnectionManager<PgConnection>>;
+
+pub fn init_pool(database_url: &str) -> DbPool {
+    let manager = ConnectionManager::<PgConnection>::new(database_url);
+    Pool::builder()
+        .build(manager)
+        .expect("Failed to create the pool")
+}

@@ -1,5 +1,6 @@
 use axum::{response::Html, routing::get, Router};
 mod db;
+
 mod models;
 
 #[tokio::main]
